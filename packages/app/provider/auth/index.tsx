@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import api from 'app/api/axios'
-import auth from 'app/api/index'
+import { loginInstance, loginApi } from 'app/api'
 
 export type AuthData = {
   userId: string
@@ -34,7 +33,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       const storagedToken = await AsyncStorage.getItem('@expoAuth:token')
 
       if (storagedToken) {
-        api.defaults.headers.common.Authorization = `Bearer ${storagedToken}`
+        loginInstance.defaults.headers.common.Authorization = `Bearer ${storagedToken}`
         setLoading(false)
       }
     }
@@ -44,12 +43,12 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const signIn = async (user: UserType) => {
     try {
-      const response = await auth.login(user)
+      const response = await loginApi.login(user)
 
       setUser(response.data.userId)
       const { token, refreshToken } = response.data
 
-      api.defaults.headers['Authorization'] = `Bearer ${token}`
+      loginInstance.defaults.headers['Authorization'] = `Bearer ${token}`
 
       await AsyncStorage.setItem('@expoAuth:refreshToken', refreshToken)
       await AsyncStorage.setItem('@expoAuth:token', token)

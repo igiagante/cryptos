@@ -40,11 +40,9 @@ export function HomeScreen() {
         <Flex flex={0.5} justifyContent="flex-end">
           <Text textAlign="left">#</Text>
         </Flex>
-
         <Flex flex={1} justifyContent="flex-end">
           <Text textAlign="left">Coin</Text>
         </Flex>
-
         <Flex flex={1.2} justifyContent="flex-end">
           <Text textAlign="left">Price</Text>
         </Flex>

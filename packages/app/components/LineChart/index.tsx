@@ -1,7 +1,7 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import { View } from 'react-native'
-import { Spinner } from 'native-base'
+import { Flex, Spinner } from 'native-base'
 import { LineChart } from 'react-native-chart-kit'
 import { Dimensions } from 'react-native'
 import { HistoricDataType } from 'app/features/crypto/cryptoDetail'
@@ -9,11 +9,6 @@ import { HistoricDataType } from 'app/features/crypto/cryptoDetail'
 type LineChartType = {
   data?: HistoricDataType
 }
-// function kFormatter(num) {
-//   return Math.abs(num) > 999
-//     ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + 'k'
-//     : Math.sign(num) * Math.abs(num)
-// }
 
 export const Chart: React.FC<LineChartType> = ({ data }) => {
   const prices = data?.prices.slice(Math.max(data?.prices?.length - 7, 0))
@@ -24,12 +19,15 @@ export const Chart: React.FC<LineChartType> = ({ data }) => {
     prices?.map((arr) => dayjs(new Date(arr[0])).format('MM-DD')) || []
 
   if (btcPrices.length === 0) {
-    return <Spinner />
+    return (
+      <Flex flex={1} justify="center" align="center">
+        <Spinner />
+      </Flex>
+    )
   }
 
   return (
     <View>
-      
       <LineChart
         data={{
           labels: [...dates],

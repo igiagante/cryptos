@@ -8,6 +8,9 @@ import { useCryptoSpace } from 'app/context/crypto-context'
 import { Arrow } from 'app/components/Arrow'
 import { IndicatorLabel } from 'app/components/IndicatorLabel'
 import { MarketInfo } from 'app/components/MarketInfo'
+import { coinGeckoApi } from 'app/api'
+import { useSWRNativeRevalidate } from '@nandorojo/swr-react-native'
+import useSWR from 'swr'
 
 export type HistoricDataType = {
   prices: [[number, number]]
@@ -22,29 +25,23 @@ export function CryptoScreen() {
   const { coins } = useCryptoSpace()
   const [historicalData, setHistoricalData] = useState<HistoricDataType>()
 
-  const [data, getData, isLoading] = useGetCryptoFetch<HistoricDataType>({
-    url: 'https://api.coingecko.com/api/v3/coins',
-    path: `/${id}/market_chart/range`,
-    params: {
-      vs_currency: 'usd',
-      order: 'to',
-      from: Math.floor(new Date(new Date().getDate() - 7).getTime() / 1000),
-      to: Math.floor(new Date().getTime() / 1000),
-    },
-  })
-
-  useEffect(() => {
-    getData()
-  }, [])
+  const { data, mutate } = useSWR('coinDetail', () =>
+    coinGeckoApi.getCoinDetail(id || '')
+  )
+  useSWRNativeRevalidate({ mutate })
 
   useEffect(() => {
     if (data) {
-      setHistoricalData(data)
+      setHistoricalData(data.data)
     }
   }, [data])
 
-  if (isLoading) {
-    return <Spinner />
+  if (!data) {
+    return (
+      <Flex flex={1} justify="center" align="center">
+        <Spinner />
+      </Flex>
+    )
   }
 
   const coin = coins.filter((coin) => coin.id === id)[0]

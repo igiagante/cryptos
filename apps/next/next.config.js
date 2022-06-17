@@ -1,8 +1,17 @@
 /** @type {import('next').NextConfig} */
+const { withExpo } = require('@expo/next-adapter');
+const withFonts = require('next-fonts');
 
 const { withNativebase } = require('@native-base/next-adapter')
 
 module.exports = withNativebase({
+  plugins: [
+    withFonts,
+    [
+      withExpo,
+      { projectRoot: __dirname }
+    ]
+  ],
   dependencies: [
     '@expo/next-adapter',
     'react-native-vector-icons',
