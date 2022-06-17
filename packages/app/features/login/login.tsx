@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Box, Button, Center, Input, Stack, Text } from 'native-base'
 import { AuthContext, UserType } from 'app/provider/auth'
-import { useRouter } from 'solito/router'
 
 export function LoginScreen() {
   const [user, setUser] = useState<UserType>({
@@ -9,12 +8,9 @@ export function LoginScreen() {
     password: 'axis_test',
   })
 
-  const { signIn, user: userId } = useContext(AuthContext)
-  const { push } = useRouter()
-
+  const { signIn } = useContext(AuthContext)
   const handleOnClick = () => {
     signIn(user)
-    // push('/home')
   }
 
   return (

@@ -1,5 +1,6 @@
+import { useGetCryptoFetch } from 'app/hooks'
 import { CoinType } from 'app/types/types'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 
 type HistoricDataType = {
   prices: number[][]
@@ -76,7 +77,7 @@ type Props = {
   children: ReactNode
 }
 
-export function CryptoProvider(props: Props) {
+export function CryptoSpaceProvider(props: Props) {
   const [cryptoSpace, setCryptoSpace] = useState<CryptoContext>({
     coins: [],
     coinHistoricData: {
@@ -103,6 +104,32 @@ export function CryptoProvider(props: Props) {
       })
     },
   })
+
+  const [data, getData, isLoading] = useGetCryptoFetch<CoinType[]>({
+    url: 'https://api.coingecko.com/api/v3/coins',
+    path: 'markets',
+    params: {
+      vs_currency: 'usd',
+      order: 'market_cap_rank',
+      per_page: 10,
+      page: 1,
+    },
+  })
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  // Get Coins
+  useEffect(() => {
+    if (data) {
+        setCryptoSpace((prevState) => {
+        const newState = { ...prevState }
+        newState.coins = data
+        return newState
+      })
+    }
+  }, [data])
 
   // Loading data
   //   if (isLoading) {

@@ -2,12 +2,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { HomeScreen } from '../../features/home/home'
 import { LoginScreen } from '../../features/login/login'
+import { CryptoScreen } from '../../features/crypto/cryptoDetail'
 import { useContext } from 'react'
 import { AuthContext } from 'app/provider/auth'
 
 const Stack = createNativeStackNavigator<{
   home: undefined
-  'user-detail': {
+  'cryptoDetail': {
     id: string
   }
   login: undefined
@@ -27,13 +28,13 @@ export function NativeNavigation() {
               title: 'Cryptos',
             }}
           />
-          {/* <Stack.Screen
-            name="user-detail"
-            component={UserDetailScreen}
+          <Stack.Screen
+            name="cryptoDetail"
+            component={CryptoScreen}
             options={{
-              title: 'User',
+              title: 'Crypto Detail',
             }}
-          /> */}
+          />
         </>
       ) : (
         <Stack.Screen

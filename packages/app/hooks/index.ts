@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
-import { CoinType } from 'app/types/types'
 
 type Props = {
   url: string
@@ -8,9 +7,10 @@ type Props = {
   params: Record<string, unknown>
 }
 
-const useGetCryptoList = <T>(props: Props): [T[], () => void, boolean] => {
+export const useGetCryptoFetch = <T>(props: Props): [T, () => void, boolean] => {
   const { url, path, params } = props
-  const [data, setData] = useState<T[]>()
+
+  const [data, setData] = useState<T>()
   const [isLoading, setIsLoading] = useState(false)
 
   const instance = axios.create({
@@ -20,7 +20,7 @@ const useGetCryptoList = <T>(props: Props): [T[], () => void, boolean] => {
   const fetchData = async () => {
     try {
       setIsLoading(true)
-      const result = await instance.get<void, AxiosResponse<T[]>>(path, {
+      const result = await instance.get<void, AxiosResponse<T>>(path, {
         params,
       })
 
@@ -29,7 +29,6 @@ const useGetCryptoList = <T>(props: Props): [T[], () => void, boolean] => {
         setIsLoading(false)
       }
     } catch (error) {
-      console.log('error', error)
       setIsLoading(false)
     }
   }
@@ -42,7 +41,5 @@ const useGetCryptoList = <T>(props: Props): [T[], () => void, boolean] => {
     }
   }
 
-  return [data as T[], getData, isLoading]
+  return [data as T, getData, isLoading]
 }
-
-export default useGetCryptoList

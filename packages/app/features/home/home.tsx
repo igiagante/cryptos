@@ -1,77 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import {
   Center,
-  Image,
   Heading,
   Text,
   Button,
-  AspectRatio,
   Box,
-  Spinner,
   ScrollView,
   Flex,
   HStack,
 } from 'native-base'
 import { AuthContext } from 'app/provider/auth'
-import axios, { AxiosResponse } from 'axios'
 import { CryptoItem } from 'app/components/CryptoItem'
-import { CoinType } from 'app/types/types'
-import useGetCryptoList from 'app/hooks'
+import { useCryptoSpace } from 'app/context/crypto-context'
 
 export function HomeScreen() {
   const { signOut } = useContext(AuthContext)
-  const [cryptos, setCryptos] = useState<Array<CoinType>>([])
-  const [isLoading, setIsLoading] = useState(false)
-
-  // const [data, getData, isLoading] = useGetCryptoList<CoinType>({
-  //   url: 'https://api.coingecko.com/api/v3/coins',
-  //   path: 'markets',
-  //   params: {
-  //     vs_currency: 'usd',
-  //     order: 'market_cap_rank',
-  //     per_page: 10,
-  //     page: 1,
-  //   },
-  // })
-
-  // useEffect(() => {
-  //   if(data) {
-  //     getData()
-  //     setCryptos(data)
-  //   }
-  // }, [data])
-  
-
-  const instance = axios.create()
-
-  useEffect(() => {
-    setIsLoading(true)
-    const fetchCryptos = async () => {
-      const result = await instance.get<void, AxiosResponse<CoinType[]>>(
-        'https://api.coingecko.com/api/v3/coins/markets',
-        {
-          params: {
-            vs_currency: 'usd',
-            order: 'market_cap_rank',
-            per_page: 10,
-            page: 1,
-          },
-        }
-      )
-      setCryptos(result.data)
-    }
-    fetchCryptos()
-  }, [])
-
-  useEffect(() => {
-    if (cryptos) {
-      setIsLoading(false)
-    }
-  }, [cryptos])
-
-  if (isLoading) {
-    return <Spinner />
-  }
+  const { coins } = useCryptoSpace()
 
   return (
     <Box bg={'bgColor'} h="100%">
@@ -109,12 +53,13 @@ export function HomeScreen() {
         </Flex>
       </HStack>
       <ScrollView h="80">
-        {cryptos &&
-          cryptos.map((c) => {
+        {coins &&
+          coins.map((c) => {
             return (
               <CryptoItem
                 key={c.symbol}
                 rank={c.market_cap_rank}
+                name={c.name}
                 symbol={c.symbol}
                 imgSrc={c.image}
                 price={c.current_price}

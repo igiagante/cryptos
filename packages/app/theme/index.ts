@@ -24,6 +24,9 @@ const fontConfig = {
     500: {
       normal: 'Roboto_500Medium',
     },
+    700: {
+      normal: 'Roboto_700Bold',
+    },
   },
   Rubik: {
     300: {
