@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Box, Button, Center, Input, Stack, Text } from 'native-base'
 import { AuthContext, UserType } from 'app/provider/auth'
+import { Link as SolitoLink } from 'solito/link'
 
 export function LoginScreen() {
   const [user, setUser] = useState<UserType>({
@@ -49,7 +50,9 @@ export function LoginScreen() {
         />
       </Stack>
       <Box mt="6">
+      <SolitoLink href="/home">
         <Button
+          pointerEvents="none"
           variant="outline"
           onPress={handleOnClick}
           fontWeight='bold'
@@ -61,6 +64,7 @@ export function LoginScreen() {
         >
           <Text color="white">Login</Text>
         </Button>
+        </SolitoLink>
       </Box>
     </Center>
   )

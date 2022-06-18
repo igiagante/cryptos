@@ -3,8 +3,17 @@ import React from 'react'
 import { NativeBaseProvider } from 'native-base'
 import { focusManager, QueryClientProvider, QueryClient } from 'react-query'
 import theme from '../theme'
-import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto'
-import { Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik'
+import {
+  useFonts,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold
+} from '@expo-google-fonts/roboto'
+import {
+  Rubik_400Regular,
+  Rubik_500Medium,
+  Rubik_700Bold,
+} from '@expo-google-fonts/rubik'
 import { Platform, Text } from 'react-native'
 import { AuthProvider } from './auth'
 import { CryptoSpaceProvider } from 'app/context/crypto-context'
@@ -31,7 +40,7 @@ export function Provider({ children }: { children: React.ReactNode }) {
     focusManager.setFocused(true)
   }
 
-  if (!fonts) {
+  if (!fonts && Platform.OS !== 'web') {
     return <Text>Loading ...</Text>
   }
 

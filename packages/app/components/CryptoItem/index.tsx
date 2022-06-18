@@ -25,7 +25,7 @@ export const CryptoItem: React.FC<CryptoItemType> = ({
 
   return (
     <TouchableOpacity
-      onPress={() => push(`/cryptoDetail/${id.toLocaleLowerCase()}`)}
+      onPress={() => push(`/coin/${id.toLocaleLowerCase()}`)}
     >
       <HStack
         bg="bgColor"
