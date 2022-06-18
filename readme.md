@@ -1,19 +1,30 @@
 # NativeBase + Solito Starter Template
+# Greener Challenge front-end
 
-For a long long time the React Native community has been looking for a way to make Universal Apps a reality, and the major roadblock that was stopping us was Navigation. Solito is most probably the answer to that, and as we know NativeBase already works on all the three platforms. It’s a match made in heaven. So now your next can run with the same codebase on all the 3 platforms and we are here to show you how?
+Hey Nachi! This is the repo where you will be working the next few days for the code challenge. There are a few things to take into account.
 
-> Note: If you are looking to make your current codebase into a universal app, It’s really tricky and different for different codebases. Feel free to reach out to us on our Discord Server with such use cases, we will try to help you out as much as we can.
-> 
+- Changes should be periodically pushed to this repo ⌛️
+- For each task there should be one PR, you should merge each into a `main` branch 🌲
+- There is no time limit! But let's try not to think about that 😅
+- I will be recommending some libraries but you can always choose to use whichever you want 💅
 
-We have already done the hard work for you and created a starter kit for you to start with.
+The goal of the challenge is seeing your amazing abilities with frontend technologies! All the assets needed to complete the tasks are provided in the `assets` folder. If there is something extra you need or I missed please let me know 😃
 
-## Getting Started
+This challenge consists of the following tasks
 
-- Clone the repo: [https://github.com/GeekyAnts/nativebase-templates/tree/master/solito-universal-app-template-nativebase-typescript](https://github.com/GeekyAnts/nativebase-templates/tree/master/solito-universal-app-template-nativebase-typescript)
-- Run `yarn` or `npm install` on the root directory.
-- Then run `yarn` or `npm install` in apps/expo and apps/next.
-- Now run `yarn` or `npm install` in packages/app.
+- Create a login page with two fields, email and password. Fields must be validated with the following validations, email must be valid email and password bust be between 3 and 8 characters
+- Create an oboarding flow that has 3 slides with some illustrations and some random text. Every app got one nowadays. This has to be done only for the mobile app
+- Create a home screen that shows the top 10 trending crypto coins available on the market
+- Create a coin detail screen, it should include it's name, price, market liquidity and whatever you feel is relevant. It would be great if you can manage to find a solution to implement a cross platform chart component.
+- And last but not least, it's time for you to unleash your creativity and add something amazing into the app. It would
 
-That’s it your starter kit is ready to be used.
+The challenge will be cross-platform. Here are some libraries you might be interested in using for this challenge.
 
-All your screens and components will be present in packages/app and this can be accessed in the next and expo projects.
+- [Solito](https://solito.dev)
+- react-hook-from
+- native-base
+
+For navigation you should use [Solito](https://solito.dev), I would recommend to use it's starter template that sets you up with a monorepo along with the expo and next app. If you decide to set up your own environment.
+
+Good luck and have fun!
+
