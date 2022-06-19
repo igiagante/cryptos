@@ -3,6 +3,7 @@ import { Flex, Text } from 'native-base'
 import { View, Image, TouchableOpacity } from 'react-native'
 
 import Onboarding from 'react-native-onboarding-swiper'
+import { useRouter } from 'solito/router'
 
 const Dot: React.FC<{ selected: boolean }> = ({ selected }) => {
   return (
@@ -40,30 +41,16 @@ const LEARNING = 'Start learning about blockchain & cryptocurrency'
 const TOPICS = 'Decentralized, Security & Trustless'
 const DEFI = 'Disrupting the World of Finance Using Blockchain Technology'
 
-const pagesData = [
-  {
-    imagePath: '../../assets/crypto_world.png',
-    title: LEARNING,
-  },
-  {
-    imagePath: '../../assets/mining.png',
-    title: TOPICS,
-  },
-  {
-    imagePath: '../../assets/defi.png',
-    title: DEFI,
-  },
-]
-
-export const OnboardingScreen = ({ navigation }) => {
+export const OnboardingScreen = () => {
+  const { push, replace } = useRouter()
   return (
     <Onboarding
       SkipButtonComponent={Skip}
       NextButtonComponent={Next}
       DoneButtonComponent={Done}
       DotComponent={Dot}
-      onSkip={() => navigation.replace('Login')}
-      onDone={() => navigation.navigate('Login')}
+      onSkip={() => replace('/')}
+      onDone={() => push('/')}
       pages={[
         {
           backgroundColor: '#263038',
@@ -76,7 +63,7 @@ export const OnboardingScreen = ({ navigation }) => {
               />
             </Flex>
           ),
-          title: 'start learning about blockchain & cryptocurrency',
+          title: LEARNING,
           titleStyles: { marginBottom: 68, fontSize: 16, fontWeight: 'bold' },
           subtitle: '',
         },
@@ -91,7 +78,7 @@ export const OnboardingScreen = ({ navigation }) => {
               />
             </Flex>
           ),
-          title: 'Decentralized, Security & Trustless',
+          title: TOPICS,
           titleStyles: { marginBottom: 68, fontSize: 16, fontWeight: 'bold' },
           subtitle: '',
         },
@@ -106,7 +93,7 @@ export const OnboardingScreen = ({ navigation }) => {
               />
             </Flex>
           ),
-          title: 'Disrupting the World of Finance Using Blockchain Technology',
+          title: DEFI,
           titleStyles: { marginBottom: 68, fontSize: 16, fontWeight: 'bold' },
           subtitle: '',
         },
