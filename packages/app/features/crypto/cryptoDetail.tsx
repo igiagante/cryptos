@@ -5,7 +5,6 @@ import { createParam } from 'solito'
 import { useGetCryptoFetch } from 'app/hooks'
 import { Chart } from 'app/components'
 import { useCryptoSpace } from 'app/context/crypto-context'
-import { Arrow } from 'app/components/Arrow'
 import { IndicatorLabel } from 'app/components/IndicatorLabel'
 import { MarketInfo } from 'app/components/MarketInfo'
 
@@ -22,7 +21,7 @@ export function CryptoScreen() {
   const { coins } = useCryptoSpace()
   const [historicalData, setHistoricalData] = useState<HistoricDataType>()
 
-  const [data, getData, isLoading] = useGetCryptoFetch<HistoricDataType>({
+  const [data, isLoading] = useGetCryptoFetch<HistoricDataType>({
     url: 'https://api.coingecko.com/api/v3/coins',
     path: `/${id}/market_chart/range`,
     params: {
@@ -32,10 +31,6 @@ export function CryptoScreen() {
       to: Math.floor(new Date().getTime() / 1000),
     },
   })
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   useEffect(() => {
     if (data) {

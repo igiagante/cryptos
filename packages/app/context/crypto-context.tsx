@@ -105,7 +105,7 @@ export function CryptoSpaceProvider(props: Props) {
     },
   })
 
-  const [data, getData, isLoading] = useGetCryptoFetch<CoinType[]>({
+  const [data, isLoading] = useGetCryptoFetch<CoinType[]>({
     url: 'https://api.coingecko.com/api/v3/coins',
     path: 'markets',
     params: {
@@ -115,10 +115,6 @@ export function CryptoSpaceProvider(props: Props) {
       page: 1,
     },
   })
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   // Get Coins
   useEffect(() => {
