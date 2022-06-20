@@ -13,22 +13,31 @@ const Stack = createNativeStackNavigator<{
 export function AppStack() {
   return (
     <Stack.Navigator initialRouteName={'home'}>
-      <>
-        <Stack.Screen
-          name="home"
-          component={HomeScreen}
-          options={{
-            title: 'Cryptos',
-          }}
-        />
-        <Stack.Screen
-          name="cryptoDetail"
-          component={CryptoScreen}
-          options={{
-            title: 'Crypto Detail',
-          }}
-        />
-      </>
+      <Stack.Screen
+        name="home"
+        component={HomeScreen}
+        options={{
+          title: '',
+          header: undefined,
+          headerShadowVisible: false,
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: '#263038',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="cryptoDetail"
+        component={CryptoScreen}
+        options={{
+          title: '',
+          headerShadowVisible: false,
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: '#263038',
+          },
+        }}
+      />
     </Stack.Navigator>
   )
 }

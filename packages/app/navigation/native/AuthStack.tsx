@@ -4,6 +4,8 @@ import { LoginScreen } from '../../features/login/login'
 import { OnboardingScreen } from '../../features/onboarding/onboarding'
 import { useFirstLunch } from 'app/hooks'
 import { Spinner } from 'native-base'
+import { useContext } from 'react'
+import { AuthContext } from 'app/provider/auth'
 
 const Stack = createNativeStackNavigator<{
   login: undefined
@@ -11,7 +13,10 @@ const Stack = createNativeStackNavigator<{
 }>()
 
 export function AuthStack() {
-  const [isFirstLaunch] = useFirstLunch()
+  const { user, isFirstLaunch } = useContext(AuthContext)
+
+  console.log('isFirstLaunch', isFirstLaunch)
+  console.log('user', user)
 
   if (isFirstLaunch === null) return <Spinner />
 
@@ -21,7 +26,13 @@ export function AuthStack() {
         name="login"
         component={LoginScreen}
         options={{
-          title: 'Login',
+          header: undefined,
+          headerShadowVisible: false,
+          headerBackVisible: false,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#263038',
+          },
         }}
       />
       <Stack.Screen

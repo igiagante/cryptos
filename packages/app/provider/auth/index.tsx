@@ -18,6 +18,7 @@ export type UserType = {
 interface AuthContextData {
   signed: boolean
   user: string | null
+  isFirstLaunch: boolean | null
   loading: boolean
   signIn: (user: UserType) => Promise<void>
   signOut: () => void
@@ -28,6 +29,8 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null)
+  
 
   useEffect(() => {
     async function loadStorageData() {
@@ -36,6 +39,15 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (storagedToken) {
         api.defaults.headers.common.Authorization = `Bearer ${storagedToken}`
         setLoading(false)
+      }
+
+      const firstLoaded = await AsyncStorage.getItem('firstLoaded')
+
+      if (firstLoaded === null) {
+        AsyncStorage.setItem('firstLoaded', 'true')
+        setIsFirstLaunch(true)
+      } else {
+        setIsFirstLaunch(false)
       }
     }
 
@@ -53,23 +65,19 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       await AsyncStorage.setItem('@expoAuth:refreshToken', refreshToken)
       await AsyncStorage.setItem('@expoAuth:token', token)
+      setIsFirstLaunch(false)
     } catch (error) {
       console.log('error', error)
     }
   }
 
   const signOut = async () => {
-    AsyncStorage.clear().then(() => {
-      setUser(null)
-    })
+    setUser(null)
+    await AsyncStorage.clear()
   }
 
   return (
-    <AuthContext.Provider
-      value={{ signed: !!user, user, loading, signIn, signOut }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ signed: !!user, user, isFirstLaunch, loading, signIn, signOut }}>{children}</AuthContext.Provider>
   )
 }
 

@@ -59,5 +59,5 @@ export const useFirstLunch = () => {
     loadStorageData()
   }, [])
 
-  return [isFirstLaunch]
+  return [isFirstLaunch, setIsFirstLaunch]
 }

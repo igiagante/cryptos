@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Flex, Text } from 'native-base'
 import { View, Image, TouchableOpacity } from 'react-native'
 
@@ -41,8 +41,11 @@ const LEARNING = 'Start learning about blockchain & cryptocurrency'
 const TOPICS = 'Decentralized, Security & Trustless'
 const DEFI = 'Disrupting the World of Finance Using Blockchain Technology'
 
+
+
 export const OnboardingScreen = () => {
   const { push, replace } = useRouter()
+
   return (
     <Onboarding
       SkipButtonComponent={Skip}
@@ -50,7 +53,7 @@ export const OnboardingScreen = () => {
       DoneButtonComponent={Done}
       DotComponent={Dot}
       onSkip={() => replace('/')}
-      onDone={() => push('/')}
+      onDone={() => replace('/')}
       pages={[
         {
           backgroundColor: '#263038',
