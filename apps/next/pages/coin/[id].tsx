@@ -1,3 +1,3 @@
-import { CryptoScreen } from 'app/features/crypto/cryptoDetail'
+import { CryptoScreen } from 'app/features/coin/coin'
 
 export default CryptoScreen

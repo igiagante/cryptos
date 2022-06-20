@@ -7,5 +7,6 @@ import { AppStack } from './AppStack'
 
 export function NativeNavigation() {
   const { user } = useContext(AuthContext)
+  console.log('user', user)
   return user ? <AppStack /> : <AuthStack />
 }

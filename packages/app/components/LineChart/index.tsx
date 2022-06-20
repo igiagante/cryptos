@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { Spinner } from 'native-base'
 import { LineChart } from 'react-native-chart-kit'
 import { Dimensions } from 'react-native'
-import { HistoricDataType } from 'app/features/crypto/cryptoDetail'
+import { HistoricDataType } from 'app/features/coin/coin'
 
 type LineChartType = {
   data?: HistoricDataType

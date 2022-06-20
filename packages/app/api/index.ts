@@ -1,4 +1,4 @@
-import { HistoricDataType } from 'app/features/crypto/cryptoDetail'
+import { HistoricDataType } from 'app/features/coin/coin'
 import { UserType } from 'app/provider/auth'
 import { AuthData } from 'app/provider/auth/types'
 import { CoinType } from 'app/types/types'
@@ -16,10 +16,7 @@ export const loginApi = {
       '/security/refresh',
       authData
     )
-  },
-  getCoins: (user: UserType) => {
-    return loginInstance.post<string, AxiosResponse<AuthData>>('/security/login', user)
-  },
+  }
 }
 
 export const coinGeckoInstance = createAxiosIntance('https://api.coingecko.com/api/v3/coins')

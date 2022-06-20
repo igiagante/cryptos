@@ -1,7 +1,7 @@
 import React from 'react'
 import { Center, Heading, Text, Box, Spinner, Divider, Flex, IconButton } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useQuery } from 'react-query';
+import { useQuery } from 'react-query'
 import { createParam } from 'solito'
 import { Chart } from 'app/components'
 import { useCryptoSpace } from 'app/context/crypto-context'
@@ -20,7 +20,7 @@ const { useParam } = createParam<{ id: string }>()
 
 export function CryptoScreen() {
   const [id] = useParam('id')
-  const { coins } = useCryptoSpace()
+  const { coins, isWeb } = useCryptoSpace()
   const { back } = useRouter()
 
   const { data, isLoading } = useQuery(['coin', id], () => coinGeckoApi.getCoinDetail(id || ''))
@@ -39,23 +39,25 @@ export function CryptoScreen() {
   return (
     <>
       <Box bg={'bgColor'} h="100%">
-        <IconButton
-          w={16}
-          h={10}
-          size="xs"
-          bg="transparent"
-          onPress={back}
-          top={8}
-          left={4}
-          _pressed={{
-            bg: 'transparent',
-          }}
-          _icon={{
-            as: MaterialIcons,
-            name: 'arrow-back-ios',
-            color: 'white',
-          }}
-        />
+        {!isWeb && (
+          <IconButton
+            w={16}
+            h={10}
+            size="xs"
+            bg="transparent"
+            onPress={back}
+            top={8}
+            left={4}
+            _pressed={{
+              bg: 'transparent',
+            }}
+            _icon={{
+              as: MaterialIcons,
+              name: 'arrow-back-ios',
+              color: 'white',
+            }}
+          />
+        )}
         <Center mt={8} mb={8}>
           <Heading color="white" fontSize="32px" fontFamily="rubik" fontWeight={500}>
             {coin?.name}

@@ -31,7 +31,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null)
-  
 
   useEffect(() => {
     async function loadStorageData() {
@@ -63,6 +62,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signIn = async (user: UserType) => {
     try {
       const response = await loginApi.login(user)
+
       const { userId } = response.data
 
       setUser(userId)
@@ -85,8 +85,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   const signOut = async () => {
-    setUser(null)
-    await AsyncStorage.clear()
     AsyncStorage.clear().then(() => {
       if (Platform.OS !== 'web') {
         setUser(null)
@@ -99,7 +97,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, isFirstLaunch, loading, signIn, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ signed: !!user, user, isFirstLaunch, loading, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 

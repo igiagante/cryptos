@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { HomeScreen } from '../../features/home/home'
-import { CryptoScreen } from '../../features/crypto/cryptoDetail'
+import { CryptoScreen } from '../../features/coin/coin'
 
 const Stack = createNativeStackNavigator<{
   home: undefined
-  cryptoDetail: {
+  coin: {
     id: string
   }
 }>()
@@ -27,7 +27,7 @@ export function AppStack() {
         }}
       />
       <Stack.Screen
-        name="cryptoDetail"
+        name="coin"
         component={CryptoScreen}
         options={{
           title: '',

@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Box, Button, Center, Input, Stack, Text } from 'native-base'
 import { AuthContext, UserType } from 'app/provider/auth'
-import { Link as SolitoLink } from 'solito/link'
+import { useRouter } from 'solito/router'
+import { CryptoContext } from 'app/context/crypto-context'
 
 export function LoginScreen() {
   const [user, setUser] = useState<UserType>({
@@ -9,9 +10,13 @@ export function LoginScreen() {
     password: 'axis_test',
   })
 
+  const { push } = useRouter()
   const { signIn } = useContext(AuthContext)
+  const { isWeb } = useContext(CryptoContext)
+
   const handleOnClick = () => {
     signIn(user)
+    isWeb && push('/home')
   }
 
   return (
@@ -50,9 +55,7 @@ export function LoginScreen() {
         />
       </Stack>
       <Box mt="6">
-      <SolitoLink href="/home">
         <Button
-          pointerEvents="none"
           variant="outline"
           onPress={handleOnClick}
           fontWeight='bold'
@@ -64,7 +67,6 @@ export function LoginScreen() {
         >
           <Text color="white">Login</Text>
         </Button>
-        </SolitoLink>
       </Box>
     </Center>
   )

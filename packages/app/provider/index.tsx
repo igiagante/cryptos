@@ -19,7 +19,6 @@ import { AuthProvider } from './auth'
 import { CryptoSpaceProvider } from 'app/context/crypto-context'
 
 import { LogBox } from 'react-native'
-import { NetworkStatusProvider } from './network'
 
 LogBox.ignoreLogs(['NativeBase:'])
 
@@ -40,13 +39,12 @@ export function Provider({ children }: { children: React.ReactNode }) {
     focusManager.setFocused(true)
   }
 
-  if (!fonts && Platform.OS !== 'web') {
+  if (!fonts && !isWEB) {
     return <Text>Loading ...</Text>
   }
 
   return (
     <QueryClientProvider client={new QueryClient()}>
-      <NetworkStatusProvider>
         <AuthProvider>
           <NavigationProvider>
             <NativeBaseProvider theme={theme}>
@@ -54,7 +52,6 @@ export function Provider({ children }: { children: React.ReactNode }) {
             </NativeBaseProvider>
           </NavigationProvider>
         </AuthProvider>
-      </NetworkStatusProvider>
     </QueryClientProvider>
   )
 }
