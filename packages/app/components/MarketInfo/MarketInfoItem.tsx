@@ -9,23 +9,13 @@ type MarketInfoItemType = {
   styles?: StyleProp<ViewStyle>
 }
 
-export const MarketInfoItem: React.FC<MarketInfoItemType> = ({
-  title,
-  subtitle,
-  indicator,
-  styles
-}) => {
+export const MarketInfoItem: React.FC<MarketInfoItemType> = ({ title, subtitle, indicator, styles }) => {
   return (
     <Flex style={styles}>
-      <Text
-        textAlign={["left", "center"]}
-        color="lightgrey"
-        fontFamily="roboto"
-        fontWeight={400}
-      >
+      <Text textAlign={['left', 'center']} color="lightgrey" fontFamily="roboto" fontWeight={400} fontSize={[16, 20]}>
         {title}
       </Text>
-      <Text textAlign={["left", "center"]} color="white" fontFamily="roboto" fontWeight={700}>
+      <Text textAlign={['left', 'center']} color="white" fontFamily="roboto" fontWeight={700} fontSize={[16, 20]}>
         {subtitle}
       </Text>
       {indicator}

@@ -6,11 +6,16 @@ import { useCryptoSpace } from 'app/context/crypto-context'
 import { coinGeckoApi } from 'app/api'
 import { useRefreshOnFocus } from 'app/hooks'
 import { useQuery } from 'react-query'
-import { Platform } from 'react-native'
+import { Platform, useWindowDimensions } from 'react-native'
+import { CryptoListHeader } from 'app/components/CryptoListHeader'
 
 export function HomeScreen() {
   const { signOut } = useContext(AuthContext)
   const { setCoins, isWeb } = useCryptoSpace()
+
+  const { width } = useWindowDimensions();
+  const screenWidth = width || 1280;
+  const large = screenWidth > 1280;
 
   const { data, isLoading, refetch } = useQuery(['coins'], () => coinGeckoApi.getCoins())
 
@@ -48,37 +53,14 @@ export function HomeScreen() {
           Trending Cryptos
         </Heading>
       </Center>
-      <Flex
-        direction="row"
-        alignItems="center"
-        h={16}
-        borderRadius="10px"
-        shadow={10}
-        mx={8}
-        paddingLeft={isWeb ? 256 : 0}
-        paddingRight={isWeb ? 128 : 0}
-      >
-        <Flex flex={0.5} justifyContent={["flex-end", "center"]}>
-          <Text textAlign="left">#</Text>
-        </Flex>
-
-        <Flex flex={1} justifyContent="flex-end">
-          <Text textAlign="left">Coin</Text>
-        </Flex>
-
-        <Flex flex={1.2} justifyContent="flex-end">
-          <Text textAlign="left">Price</Text>
-        </Flex>
-        <Flex flex={0.75} justifyContent="flex-end">
-          <Text textAlign="left">24 hr</Text>
-        </Flex>
-      </Flex>
+      <CryptoListHeader />
       {isLoading ? (
         <Flex flex={1} align="center" justify="center">
           <Spinner />
         </Flex>
       ) : (
-        <ScrollView px={[0, 256]}>
+        <ScrollView paddingLeft={isWeb && large ? 256 : 0}
+        paddingRight={isWeb && large ? 256 : 0}>
           {coins &&
             coins.map((c) => {
               return (
@@ -91,6 +73,8 @@ export function HomeScreen() {
                   imgSrc={c.image}
                   price={c.current_price}
                   lastChange={c.price_change_percentage_24h}
+                  volume={c.total_volume}
+                  marketCap={parseFloat(c.market_cap.toString())}
                 />
               )
             })}

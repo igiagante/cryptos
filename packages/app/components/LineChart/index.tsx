@@ -41,7 +41,7 @@ export const Chart: React.FC<LineChartType> = ({ data }) => {
           ],
         }}
         width={isWeb ? 1280 : Dimensions.get('window').width} // from react-native
-        height={isWeb ? 480 : 220}
+        height={isWeb ? 480 : 230}
         chartConfig={{
           backgroundColor: '#25507d',
           backgroundGradientFrom: '#114357',

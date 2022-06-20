@@ -13,11 +13,11 @@ export const IndicatorLabel: React.FC<IndicatorLabelType> = ({ direction, firstV
     <Flex direction="row" justifyContent={['flex-start', 'center']}>
       <Flex direction="row" justifyContent="center" alignItems="center">
         <Arrow direction={direction} />
-        <Text ml={[1, 2]} fontFamily="rubik" fontSize={16} color={direction === 'up' ? 'green' : 'red'}>
+        <Text ml={[1, 2]} fontFamily="rubik" fontSize={[16, 20]} color={direction === 'up' ? 'green' : 'red'}>
           {firstValue}
         </Text>
       </Flex>
-      <Text fontFamily="rubik" fontSize={16} color={direction === 'up' ? 'green' : 'red'}>
+      <Text fontFamily="rubik" fontSize={[16, 20]} color={direction === 'up' ? 'green' : 'red'}>
         {secondValue && <Text style={{ color: 'gray' }}> ({secondValue}%)</Text>}
       </Text>
     </Flex>

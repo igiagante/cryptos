@@ -92,13 +92,20 @@ export function CryptoScreen() {
             secondValue={coin?.market_cap_change_percentage_24h.toFixed(2) || ''}
           />
         </Center>
-        <Divider key="first" h={0.25} color="lightgrey" bg="lightgrey" my={2} mb={4} />
+        <Divider key="first" h={0.25} color="lightgrey" bg="lightgrey" my={2} />
 
-        {coin && <MarketInfo coin={coin} totalWeek={-10983} totalWeekPercentage={22} styles={{ marginBottom: 16 }} />}
+        {coin && (
+          <MarketInfo
+            coin={coin}
+            totalWeek={-10983}
+            totalWeekPercentage={22}
+            styles={{ marginBottom: 16, marginTop: 16 }}
+          />
+        )}
 
-        <Divider key="second-line" h={0.5} color="lightgrey" bg="lightgrey" mt={2} />
+        <Divider key="second-line" h={isWeb ? 0.25 : 0.5} color="lightgrey" bg="lightgrey" mt={2} />
 
-        <Text fontFamily="roboto" fontWeight={500} fontSize={18} mt={[4, 16]} mb={[2, 4]} ml={[1, 32]}>
+        <Text fontFamily="roboto" fontWeight={500} fontSize={18} mt={[8, 16]} mb={[0, 4]} ml={[1, 32]}>
           {coin?.name} to USD Chart (7d)
         </Text>
         <Chart data={data && data.data} />
