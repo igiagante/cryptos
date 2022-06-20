@@ -10,27 +10,6 @@ import { MarketInfo } from 'app/components/MarketInfo'
 import { useRouter } from 'solito/router'
 import { coinGeckoApi } from 'app/api'
 
-import { Chart as ChartResponsive, Line, Area, HorizontalAxis, VerticalAxis } from 'react-native-responsive-linechart'
-
-const dataChart = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  datasets: [
-    {
-      label: 'First dataset',
-      data: [33, 53, 85, 41, 44, 65],
-      fill: true,
-      backgroundColor: 'rgba(75,192,192,0.2)',
-      borderColor: 'rgba(75,192,192,1)',
-    },
-    {
-      label: 'Second dataset',
-      data: [33, 25, 35, 51, 54, 76],
-      fill: false,
-      borderColor: '#742774',
-    },
-  ],
-}
-
 export type HistoricDataType = {
   prices: [[number, number]]
   market_caps: [[number, number]]
@@ -44,7 +23,10 @@ export function CryptoScreen() {
   const { coins, isWeb } = useCryptoSpace()
   const { back } = useRouter()
 
-  const { data, isLoading } = useQuery(['coin', id], () => coinGeckoApi.getCoinDetail(id || ''))
+  const { data, isLoading } = useQuery(['coin', id], () => coinGeckoApi.getCoinHistoricData(id || ''))
+  const { data: coinDetail } = useQuery(['coinDetail', id], () => coinGeckoApi.getCoinDetail(id || ''), {
+    enabled: coins.length === 0
+  })
 
   if (isLoading) {
     return (
@@ -54,8 +36,13 @@ export function CryptoScreen() {
     )
   }
 
-  const coin = coins.filter((coin) => coin.id === id)[0]
-  const direction = coin && coin?.price_change_24h > 0 ? 'up' : 'down'
+  const coin = coins.filter((coin) => coin.id === id)[0] || coinDetail?.data[0]
+  const prices = data && data.data.prices?.slice(Math.max(data.data.prices.length - 7, 0))
+
+  const first = prices && prices[0]
+  const last = prices && prices[6]
+  const totalWeek = first && last && last[1] - first[1]
+  const totalWeekPercentage = first && totalWeek && (Math.abs(last[1] - first[1]) / first[1]) * 100
 
   return (
     <>
@@ -87,7 +74,7 @@ export function CryptoScreen() {
             $ {coin?.current_price}
           </Text>
           <IndicatorLabel
-            direction={direction}
+            direction={coin && coin?.price_change_24h > 0 ? 'up' : 'down'}
             firstValue={coin?.price_change_24h.toFixed(0) || ''}
             secondValue={coin?.market_cap_change_percentage_24h.toFixed(2) || ''}
           />
@@ -97,8 +84,8 @@ export function CryptoScreen() {
         {coin && (
           <MarketInfo
             coin={coin}
-            totalWeek={-10983}
-            totalWeekPercentage={22}
+            totalWeek={totalWeek || 0}
+            totalWeekPercentage={totalWeekPercentage || 0}
             styles={{ marginBottom: 16, marginTop: 16 }}
           />
         )}
@@ -108,7 +95,7 @@ export function CryptoScreen() {
         <Text fontFamily="roboto" fontWeight={500} fontSize={18} mt={[8, 16]} mb={[0, 4]} ml={[1, 32]}>
           {coin?.name} to USD Chart (7d)
         </Text>
-        <Chart data={data && data.data} />
+        <Chart prices={prices} />
       </Box>
     </>
   )

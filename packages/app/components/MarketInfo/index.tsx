@@ -61,11 +61,11 @@ export const MarketInfo: React.FC<MarketInfoType> = ({
       <Flex flex={1}>
         <MarketInfoItem
           title="Week"
-          subtitle={totalWeek.toString()}
+          subtitle={totalWeek.toFixed(2)}
           indicator={
             <IndicatorLabel
               direction={totalWeek > 0 ? 'up' : 'down'}
-              firstValue='22%'
+              firstValue={totalWeekPercentage.toFixed(2)}
             />
           }
           styles={{

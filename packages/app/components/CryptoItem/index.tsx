@@ -29,7 +29,7 @@ export const CryptoItem: React.FC<CryptoItemType> = ({
 }) => {
   const { push } = useRouter()
   const { isWeb } = useCryptoSpace()
-  const { isMobile, isMedium, isLarge } = getScrenType()
+  const { isMobile } = getScrenType()
 
   const itemStyle = {
     borderRadius: 10,
@@ -53,8 +53,8 @@ export const CryptoItem: React.FC<CryptoItemType> = ({
         direction="row"
         bg="bgColor"
         alignItems="center"
-        shadow={rank === 0 ? 0 : 10}
-        style={rank !== 0 ? itemStyle : null}
+        shadow={10}
+        style={itemStyle}
       >
         <Text flex={[0.5, 0.4]} fontSize="md">
           #{rank}
@@ -74,7 +74,13 @@ export const CryptoItem: React.FC<CryptoItemType> = ({
           </Text>
         </Flex>
         <Flex w="100%" flex={[1.2, 0.75]} paddingRight={[4, 0]}>
-          <Text textAlign={['right', 'start']}>${price.toFixed(2)}</Text>
+          {isWeb ? (
+            <Flex w="70%">
+              <Text textAlign="right">${price.toFixed(2)}</Text>
+            </Flex>
+          ) : (
+            <Text textAlign="right">${price.toFixed(2)}</Text>
+          )}
         </Flex>
         <Flex w="100%" flex={[0.8, 0.8]} paddingRight={[4, 0]} ml={[1, 0]}>
           <Text fontSize="md" color={lastChange < 0 ? 'red' : 'green'} textAlign={['right', 'start']}>

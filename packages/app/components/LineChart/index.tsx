@@ -8,7 +8,7 @@ import { HistoricDataType } from 'app/features/coin/coin'
 import { CryptoContext } from 'app/context/crypto-context'
 
 type LineChartType = {
-  data?: HistoricDataType
+  prices: [number, number][] | undefined
 }
 // function kFormatter(num) {
 //   return Math.abs(num) > 999
@@ -16,9 +16,8 @@ type LineChartType = {
 //     : Math.sign(num) * Math.abs(num)
 // }
 
-export const Chart: React.FC<LineChartType> = ({ data }) => {
+export const Chart: React.FC<LineChartType> = ({ prices }) => {
   const { isWeb } = useContext(CryptoContext)
-  const prices = data?.prices.slice(Math.max(data?.prices?.length - 7, 0))
 
   const btcPrices = prices?.map((arr) => arr[1]) || []
 
