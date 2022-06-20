@@ -18,16 +18,14 @@ export function LoginScreen() {
       <Text fontFamily="rubik" fontSize={32} w={48} textAlign="center">
         Harkonen House
       </Text>
-      <Text mt={16} fontSize="xl" textAlign="center">
-        Login
-      </Text>
-      <Stack mt={16} space={4} w="75%" maxW="300px" mx="auto">
+      <Stack mt={32} space={4} w="75%" maxW="300px" mx="auto">
         <Input
           color="white"
           variant="underlined"
           placeholder="Email"
           value={user.email}
           mb={4}
+          bg="transparent"
           onChangeText={(email: string) =>
             setUser((prev) => ({
               ...prev,
@@ -41,6 +39,7 @@ export function LoginScreen() {
           placeholder="Password"
           value={user.password}
           mb={4}
+          bg="transparent"
           onChangeText={(pass: string) =>
             setUser((prev) => ({
               ...prev,
@@ -52,10 +51,15 @@ export function LoginScreen() {
       <Box mt="6">
         <Button
           variant="outline"
-          colorScheme="coolGray"
           onPress={handleOnClick}
+          fontWeight='bold'
+          style={{
+            borderColor: 'white',
+            borderWidth: 1
+          }}
+          
         >
-          Login
+          <Text color="white">Login</Text>
         </Button>
       </Box>
     </Center>

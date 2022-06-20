@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Flex, Spinner } from 'native-base'
 
 type Props = {
   url: string
@@ -7,7 +9,7 @@ type Props = {
   params: Record<string, unknown>
 }
 
-export const useGetCryptoFetch = <T>(props: Props): [T, () => void, boolean] => {
+export const useGetCryptoFetch = <T>(props: Props): [T, boolean] => {
   const { url, path, params } = props
 
   const [data, setData] = useState<T>()
@@ -33,13 +35,29 @@ export const useGetCryptoFetch = <T>(props: Props): [T, () => void, boolean] => 
     }
   }
 
-  const getData = () => {
-    if (location) {
-      fetchData()
-    } else {
-      setIsLoading(false)
-    }
-  }
+  useEffect(() => {
+    fetchData()
+  }, [])
 
-  return [data as T, getData, isLoading]
+  return [data as T, isLoading]
+}
+export const useFirstLunch = () => {
+  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    async function loadStorageData() {
+      const firstLoaded = await AsyncStorage.getItem('firstLoaded')
+
+      if (firstLoaded === null) {
+        AsyncStorage.setItem('firstLoaded', 'true')
+        setIsFirstLaunch(true)
+      } else {
+        setIsFirstLaunch(false)
+      }
+    }
+
+    loadStorageData()
+  }, [])
+
+  return [isFirstLaunch, setIsFirstLaunch]
 }
