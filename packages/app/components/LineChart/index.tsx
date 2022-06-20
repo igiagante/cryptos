@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import dayjs from 'dayjs'
 import { View } from 'react-native'
-import { Spinner } from 'native-base'
+import { Flex, Spinner } from 'native-base'
 import { LineChart } from 'react-native-chart-kit'
 import { Dimensions } from 'react-native'
 import { HistoricDataType } from 'app/features/coin/coin'
+import { CryptoContext } from 'app/context/crypto-context'
 
 type LineChartType = {
   data?: HistoricDataType
@@ -16,6 +17,7 @@ type LineChartType = {
 // }
 
 export const Chart: React.FC<LineChartType> = ({ data }) => {
+  const { isWeb } = useContext(CryptoContext)
   const prices = data?.prices.slice(Math.max(data?.prices?.length - 7, 0))
 
   const btcPrices = prices?.map((arr) => arr[1]) || []
@@ -28,8 +30,7 @@ export const Chart: React.FC<LineChartType> = ({ data }) => {
   }
 
   return (
-    <View>
-      
+    <Flex flex={1} alignItems="center" justify="center" mt={4} ml={[0, 0, 4]}>
       <LineChart
         data={{
           labels: [...dates],
@@ -39,15 +40,15 @@ export const Chart: React.FC<LineChartType> = ({ data }) => {
             },
           ],
         }}
-        width={Dimensions.get('window').width} // from react-native
-        height={220}
+        width={isWeb ? 1280 : Dimensions.get('window').width} // from react-native
+        height={isWeb ? 480 : 220}
         chartConfig={{
           backgroundColor: '#25507d',
-          backgroundGradientFrom: '#4aa7dd',
-          backgroundGradientTo: '#25507d',
+          backgroundGradientFrom: '#114357',
+          backgroundGradientTo: '#F29492',
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         }}
       />
-    </View>
+    </Flex>
   )
 }

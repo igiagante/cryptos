@@ -18,14 +18,14 @@ export const MarketInfoItem: React.FC<MarketInfoItemType> = ({
   return (
     <Flex style={styles}>
       <Text
-        textAlign="left"
+        textAlign={["left", "center"]}
         color="lightgrey"
         fontFamily="roboto"
         fontWeight={400}
       >
         {title}
       </Text>
-      <Text textAlign="left" color="white" fontFamily="roboto" fontWeight={700}>
+      <Text textAlign={["left", "center"]} color="white" fontFamily="roboto" fontWeight={700}>
         {subtitle}
       </Text>
       {indicator}

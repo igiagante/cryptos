@@ -30,7 +30,7 @@ export const MarketInfo: React.FC<MarketInfoType> = ({
       : 'down'
 
   return (
-    <HStack alignItems="center" h={16} p={4} space={3} mx={4} style={styles}>
+    <HStack alignItems="center" h={16} p={4} space={3} mx={[4, 48, 64]} style={styles}>
       <Flex flex={1}>
         <MarketInfoItem
           title="Market Cap"

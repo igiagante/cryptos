@@ -10,6 +10,27 @@ import { MarketInfo } from 'app/components/MarketInfo'
 import { useRouter } from 'solito/router'
 import { coinGeckoApi } from 'app/api'
 
+import { Chart as ChartResponsive, Line, Area, HorizontalAxis, VerticalAxis } from 'react-native-responsive-linechart'
+
+const dataChart = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      label: 'First dataset',
+      data: [33, 53, 85, 41, 44, 65],
+      fill: true,
+      backgroundColor: 'rgba(75,192,192,0.2)',
+      borderColor: 'rgba(75,192,192,1)',
+    },
+    {
+      label: 'Second dataset',
+      data: [33, 25, 35, 51, 54, 76],
+      fill: false,
+      borderColor: '#742774',
+    },
+  ],
+}
+
 export type HistoricDataType = {
   prices: [[number, number]]
   market_caps: [[number, number]]
@@ -77,12 +98,10 @@ export function CryptoScreen() {
 
         <Divider key="second-line" h={0.5} color="lightgrey" bg="lightgrey" mt={2} />
 
-        <Flex position="absolute" bottom={0}>
-          <Text fontFamily="roboto" fontWeight={500} fontSize={18} mb={4} ml={3}>
-            {coin?.name} to USD Chart
-          </Text>
-          <Chart data={data && data.data} />
-        </Flex>
+        <Text fontFamily="roboto" fontWeight={500} fontSize={18} mt={[4, 16]} mb={[2, 4]} ml={[1, 32]}>
+          {coin?.name} to USD Chart (7d)
+        </Text>
+        <Chart data={data && data.data} />
       </Box>
     </>
   )

@@ -10,11 +10,11 @@ import { Platform } from 'react-native'
 
 export function HomeScreen() {
   const { signOut } = useContext(AuthContext)
-  const { setCoins } = useCryptoSpace()
+  const { setCoins, isWeb } = useCryptoSpace()
 
   const { data, isLoading, refetch } = useQuery(['coins'], () => coinGeckoApi.getCoins())
 
-  if (Platform.OS !== 'web') {
+  if (!isWeb) {
     useRefreshOnFocus(refetch)
   }
 
@@ -48,8 +48,17 @@ export function HomeScreen() {
           Trending Cryptos
         </Heading>
       </Center>
-      <HStack alignItems="center" h={16} p={4} borderRadius="10px" shadow={10} mx={4}>
-        <Flex flex={0.5} justifyContent="flex-end">
+      <Flex
+        direction="row"
+        alignItems="center"
+        h={16}
+        borderRadius="10px"
+        shadow={10}
+        mx={8}
+        paddingLeft={isWeb ? 256 : 0}
+        paddingRight={isWeb ? 128 : 0}
+      >
+        <Flex flex={0.5} justifyContent={["flex-end", "center"]}>
           <Text textAlign="left">#</Text>
         </Flex>
 
@@ -63,13 +72,13 @@ export function HomeScreen() {
         <Flex flex={0.75} justifyContent="flex-end">
           <Text textAlign="left">24 hr</Text>
         </Flex>
-      </HStack>
+      </Flex>
       {isLoading ? (
         <Flex flex={1} align="center" justify="center">
           <Spinner />
         </Flex>
       ) : (
-        <ScrollView>
+        <ScrollView px={[0, 256]}>
           {coins &&
             coins.map((c) => {
               return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'native-base'
+import { Flex, HStack, Text } from 'native-base'
 import { Arrow } from '../Arrow'
 
 type IndicatorLabelType = {
@@ -8,19 +8,18 @@ type IndicatorLabelType = {
   secondValue?: string
 }
 
-export const IndicatorLabel: React.FC<IndicatorLabelType> = ({
-  direction,
-  firstValue,
-  secondValue,
-}) => {
+export const IndicatorLabel: React.FC<IndicatorLabelType> = ({ direction, firstValue, secondValue }) => {
   return (
-    <Text
-      fontFamily="rubik"
-      fontSize={16}
-      color={direction === 'up' ? 'green' : 'red'}
-    >
-      <Arrow direction={direction} /> {firstValue}{'  '}
-      {secondValue && <Text style={{ color: 'gray' }}>({secondValue}%)</Text>}
-    </Text>
+    <Flex direction="row" justifyContent={['flex-start', 'center']}>
+      <Flex direction="row" justifyContent="center" alignItems="center">
+        <Arrow direction={direction} />
+        <Text ml={[1, 2]} fontFamily="rubik" fontSize={16} color={direction === 'up' ? 'green' : 'red'}>
+          {firstValue}
+        </Text>
+      </Flex>
+      <Text fontFamily="rubik" fontSize={16} color={direction === 'up' ? 'green' : 'red'}>
+        {secondValue && <Text style={{ color: 'gray' }}> ({secondValue}%)</Text>}
+      </Text>
+    </Flex>
   )
 }
