@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Flex, Text } from 'native-base'
 import { View, Image, TouchableOpacity } from 'react-native'
 
@@ -13,7 +13,7 @@ const Dot: React.FC<{ selected: boolean }> = ({ selected }) => {
         height: 6,
         marginHorizontal: 3,
         borderRadius: 99999,
-        backgroundColor: selected ? 'gold' : 'D9D9D9',
+        backgroundColor: selected ? '#BBB471' : 'D9D9D9',
       }}
     />
   )

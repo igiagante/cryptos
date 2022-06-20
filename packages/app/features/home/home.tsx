@@ -1,12 +1,26 @@
-import React, { useContext } from 'react'
-import { Center, Heading, Text, Button, Box, ScrollView, Flex, HStack } from 'native-base'
+import React, { useContext, useEffect } from 'react'
+import { Center, Heading, Text, Button, Box, ScrollView, Flex, HStack, Spinner } from 'native-base'
 import { AuthContext } from 'app/provider/auth'
 import { CryptoItem } from 'app/components/CryptoItem'
 import { useCryptoSpace } from 'app/context/crypto-context'
+import { coinGeckoApi } from 'app/api'
+import { useRefreshOnFocus } from 'app/hooks'
+import { useQuery } from 'react-query'
 
 export function HomeScreen() {
   const { signOut } = useContext(AuthContext)
-  const { coins } = useCryptoSpace()
+  const { setCoins } = useCryptoSpace()
+
+  const { data, isLoading, refetch } = useQuery(['coins'], () => coinGeckoApi.getCoins())
+  useRefreshOnFocus(refetch)
+
+  const coins = data?.data
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setCoins(data.data)
+    }
+  }, [])
 
   return (
     <Flex mt="6">
@@ -47,22 +61,29 @@ export function HomeScreen() {
             <Text textAlign="left">24 hr</Text>
           </Flex>
         </HStack>
-        <ScrollView h="80">
-          {coins &&
-            coins.map((c) => {
-              return (
-                <CryptoItem
-                  key={c.symbol}
-                  rank={c.market_cap_rank}
-                  name={c.name}
-                  symbol={c.symbol}
-                  imgSrc={c.image}
-                  price={c.current_price}
-                  lastChange={c.price_change_percentage_24h}
-                />
-              )
-            })}
-        </ScrollView>
+        {isLoading ? (
+          <Flex flex={1} align="center" justify="center">
+            <Spinner />
+          </Flex>
+        ) : (
+          <ScrollView h="80">
+            {coins &&
+              coins.map((c) => {
+                return (
+                  <CryptoItem
+                    key={c.symbol}
+                    rank={c.market_cap_rank}
+                    id={c.id}
+                    name={c.name}
+                    symbol={c.symbol}
+                    imgSrc={c.image}
+                    price={c.current_price}
+                    lastChange={c.price_change_percentage_24h}
+                  />
+                )
+              })}
+          </ScrollView>
+        )}
       </Box>
     </Flex>
   )
