@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import { useRouter } from 'solito/router'
 
 type CryptoItemType = {
+  id: string
   rank: number
   name: string
   symbol: string
@@ -13,8 +14,8 @@ type CryptoItemType = {
 }
 
 export const CryptoItem: React.FC<CryptoItemType> = ({
+  id,
   rank,
-  name,
   symbol,
   imgSrc,
   price,
@@ -24,7 +25,7 @@ export const CryptoItem: React.FC<CryptoItemType> = ({
 
   return (
     <TouchableOpacity
-      onPress={() => push(`/cryptoDetail/${name.toLocaleLowerCase()}`)}
+      onPress={() => push(`/cryptoDetail/${id.toLocaleLowerCase()}`)}
     >
       <HStack
         bg="bgColor"

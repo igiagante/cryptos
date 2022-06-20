@@ -2,7 +2,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { LoginScreen } from '../../features/login/login'
 import { OnboardingScreen } from '../../features/onboarding/onboarding'
-import { useFirstLunch } from 'app/hooks'
 import { Spinner } from 'native-base'
 import { useContext } from 'react'
 import { AuthContext } from 'app/provider/auth'
@@ -13,10 +12,7 @@ const Stack = createNativeStackNavigator<{
 }>()
 
 export function AuthStack() {
-  const { user, isFirstLaunch } = useContext(AuthContext)
-
-  console.log('isFirstLaunch', isFirstLaunch)
-  console.log('user', user)
+  const { isFirstLaunch } = useContext(AuthContext)
 
   if (isFirstLaunch === null) return <Spinner />
 
