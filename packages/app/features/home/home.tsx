@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react'
-import { Center, Heading, Text, Button, Box, ScrollView, Flex, HStack, Spinner } from 'native-base'
+import { Center, Heading, Text, Button, Box, ScrollView, Flex, Spinner } from 'native-base'
 import { AuthContext } from 'app/provider/auth'
-import { CryptoItem } from 'app/components/CryptoItem'
+import { CryptoItem , CryptoListHeader} from 'app/components'
 import { useCryptoSpace } from 'app/context/crypto-context'
 import { coinGeckoApi } from 'app/api'
 import { useRefreshOnFocus } from 'app/hooks'
 import { useQuery } from 'react-query'
-import { Platform, useWindowDimensions } from 'react-native'
-import { CryptoListHeader } from 'app/components/CryptoListHeader'
+import {useWindowDimensions } from 'react-native'
 
 export function HomeScreen() {
   const { signOut } = useContext(AuthContext)

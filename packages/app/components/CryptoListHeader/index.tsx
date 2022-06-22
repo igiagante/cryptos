@@ -1,7 +1,6 @@
 import React from 'react'
 import { Flex, Text } from 'native-base'
 import { useCryptoSpace } from 'app/context/crypto-context'
-import { useWindowDimensions } from 'react-native'
 import { getScrenType } from 'app/utils/screen'
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, HStack, Text } from 'native-base'
+import { Flex, Text } from 'native-base'
 import { Arrow } from '../Arrow'
 
 type IndicatorLabelType = {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Flex, Text, AspectRatio, HStack } from 'native-base'
+import { Image, Flex, Text, AspectRatio } from 'native-base'
 import { TouchableOpacity } from 'react-native'
 import { useRouter } from 'solito/router'
 import { useCryptoSpace } from 'app/context/crypto-context'

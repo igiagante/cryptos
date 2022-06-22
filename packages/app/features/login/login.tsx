@@ -6,8 +6,8 @@ import { CryptoContext } from 'app/context/crypto-context'
 
 export function LoginScreen() {
   const [user, setUser] = useState<UserType>({
-    email: 'igiagante@gmail.com',
-    password: 'axis_test',
+    email: '',
+    password: '',
   })
 
   const { push } = useRouter()
