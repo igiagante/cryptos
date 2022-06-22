@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { loginInstance, loginApi } from 'app/api'
+import { Platform } from 'react-native'
+import { setCookies, getCookie, removeCookies } from 'cookies-next'
 
 export type AuthData = {
   userId: string
@@ -29,7 +31,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null)
-  
 
   useEffect(() => {
     async function loadStorageData() {
@@ -50,33 +51,55 @@ export const AuthProvider: React.FC = ({ children }) => {
       }
     }
 
-    loadStorageData()
+    if (Platform.OS !== 'web') {
+      loadStorageData()
+    } else {
+      const accessToken = getCookie('token')
+      loginInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+    }
   }, [])
 
   const signIn = async (user: UserType) => {
     try {
       const response = await loginApi.login(user)
 
-      setUser(response.data.userId)
+      const { userId } = response.data
+
+      setUser(userId)
       const { token, refreshToken } = response.data
 
-      loginInstance.defaults.headers.common.Authorization = `Bearer ${token}`
+      loginInstance.defaults.headers['Authorization'] = `Bearer ${token}`
+      loginInstance.defaults.headers['refresh_token'] = refreshToken
 
-      await AsyncStorage.setItem('@expoAuth:refreshToken', refreshToken)
-      await AsyncStorage.setItem('@expoAuth:token', token)
-      setIsFirstLaunch(false)
+      if (Platform.OS !== 'web') {
+        await AsyncStorage.setItem('@expoAuth:refreshToken', refreshToken)
+        await AsyncStorage.setItem('@expoAuth:token', token)
+      } else {
+        setCookies('userId', userId)
+        setCookies('token', token)
+        setCookies('refreshToken', refreshToken)
+      }
     } catch (error) {
       console.log('error', error)
     }
   }
 
   const signOut = async () => {
-    setUser(null)
-    await AsyncStorage.clear()
+    AsyncStorage.clear().then(() => {
+      if (Platform.OS !== 'web') {
+        setUser(null)
+      } else {
+        removeCookies('userId')
+        removeCookies('token')
+        removeCookies('refreshToken')
+      }
+    })
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, isFirstLaunch, loading, signIn, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ signed: !!user, user, isFirstLaunch, loading, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 

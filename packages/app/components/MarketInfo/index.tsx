@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { Flex, HStack } from 'native-base'
 import { CoinType } from 'app/types/types'
 import { MarketInfoItem } from './MarketInfoItem'
@@ -24,13 +24,8 @@ export const MarketInfo: React.FC<MarketInfoType> = ({
   const volumeBillions =
     (Math.abs(Number(coin?.total_volume)) / 1.0e9).toFixed(2) + 'B'
 
-  const marketCapDirection =
-    coin && Number(coin?.market_cap) - coin?.market_cap_change_24h > 0
-      ? 'up'
-      : 'down'
-
   return (
-    <HStack alignItems="center" h={16} p={4} space={3} mx={4} style={styles}>
+    <HStack alignItems="center" h={16} p={4} space={3} mx={[4, 48, 64]} style={styles}>
       <Flex flex={1}>
         <MarketInfoItem
           title="Market Cap"
@@ -44,7 +39,6 @@ export const MarketInfo: React.FC<MarketInfoType> = ({
         />
       </Flex>
 
-      {/* Get the volume data from the last 24hr */}
       <Flex flex={1.5} align="center">
         <MarketInfoItem
           title="24 hr Volume"
@@ -61,11 +55,11 @@ export const MarketInfo: React.FC<MarketInfoType> = ({
       <Flex flex={1}>
         <MarketInfoItem
           title="Week"
-          subtitle={totalWeek.toString()}
+          subtitle={totalWeek.toFixed(2)}
           indicator={
             <IndicatorLabel
               direction={totalWeek > 0 ? 'up' : 'down'}
-              firstValue='22%'
+              firstValue={totalWeekPercentage.toFixed(2)}
             />
           }
           styles={{

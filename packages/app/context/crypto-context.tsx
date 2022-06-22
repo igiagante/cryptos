@@ -1,13 +1,16 @@
 import React, { ReactNode, useState } from 'react'
 import { CoinType } from 'app/types/types'
+import { Platform } from 'react-native'
 
 export type CryptoContext = {
   coins: CoinType[]
+  isWeb: boolean
   setCoins: (coins: CoinType[]) => void
 }
 
 const initialData = {
   coins: [],
+  isWeb: false,
   setCoins: () => undefined,
 }
 
@@ -20,7 +23,7 @@ type Props = {
 export function CryptoSpaceProvider(props: Props) {
   const [cryptoSpace, setCryptoSpace] = useState<CryptoContext>({
     coins: [],
-
+    isWeb: Platform.OS === 'web',
     setCoins: (coins: CoinType[]) => {
       setCryptoSpace((prevState) => {
         const newState = { ...prevState }

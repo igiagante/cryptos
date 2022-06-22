@@ -17,7 +17,7 @@ export function NavigationProvider({
             initialRouteName: 'login',
             screens: {
               home: '/home',
-              cryptoDetail: '/cryptoDetail/:id',
+              'coin': '/coin/:id',
               login: ''
             },
           },

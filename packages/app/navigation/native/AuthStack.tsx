@@ -9,6 +9,7 @@ import { AuthContext } from 'app/provider/auth'
 const Stack = createNativeStackNavigator<{
   login: undefined
   onboarding: undefined
+  home: undefined
 }>()
 
 export function AuthStack() {
@@ -17,7 +18,7 @@ export function AuthStack() {
   if (isFirstLaunch === null) return <Spinner />
 
   return (
-    <Stack.Navigator initialRouteName={isFirstLaunch ? 'onboarding' : 'login'}>
+    <Stack.Navigator initialRouteName={isFirstLaunch ? 'onboarding' : 'home'}>
       <Stack.Screen
         name="login"
         component={LoginScreen}

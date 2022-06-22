@@ -1,4 +1,3 @@
-# NativeBase + Solito Starter Template
 # Greener Challenge front-end
 
 Hey Nachi! This is the repo where you will be working the next few days for the code challenge. There are a few things to take into account.

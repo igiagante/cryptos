@@ -11,7 +11,7 @@ const styles = {
     borderLeftWidth: 6,
     borderTopColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: 'red',
+    borderBottomColor: '#7DAA4A',
     borderLeftColor: 'transparent',
   },
   arrowDown: {
@@ -22,7 +22,7 @@ const styles = {
     borderRightWidth: 6,
     borderBottomWidth: 0,
     borderLeftWidth: 6,
-    borderTopColor: 'red',
+    borderTopColor: '#E53B15',
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     borderLeftColor: 'transparent',

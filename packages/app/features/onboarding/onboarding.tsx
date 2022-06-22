@@ -1,7 +1,6 @@
 import React from 'react'
 import { Flex, Text } from 'native-base'
 import { View, Image, TouchableOpacity } from 'react-native'
-
 import Onboarding from 'react-native-onboarding-swiper'
 import { useRouter } from 'solito/router'
 
@@ -44,7 +43,7 @@ const DEFI = 'Disrupting the World of Finance Using Blockchain Technology'
 
 
 export const OnboardingScreen = () => {
-  const { push, replace } = useRouter()
+  const { replace } = useRouter()
 
   return (
     <Onboarding

@@ -8,10 +8,10 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
   return (
     <>
       <Head>
-        <title>Solito Example App</title>
+        <title>Harkonnen House App</title>
         <meta
           name="description"
-          content="Expo + Next.js with Solito. By Fernando Rojo."
+          content="Crytos"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

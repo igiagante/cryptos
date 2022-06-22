@@ -1,16 +1,22 @@
 import React, { useContext, useState } from 'react'
 import { Box, Button, Center, Input, Stack, Text } from 'native-base'
 import { AuthContext, UserType } from 'app/provider/auth'
+import { useRouter } from 'solito/router'
+import { CryptoContext } from 'app/context/crypto-context'
 
 export function LoginScreen() {
   const [user, setUser] = useState<UserType>({
-    email: 'igiagante@gmail.com',
-    password: 'axis_test',
+    email: '',
+    password: '',
   })
 
+  const { push } = useRouter()
   const { signIn } = useContext(AuthContext)
+  const { isWeb } = useContext(CryptoContext)
+
   const handleOnClick = () => {
     signIn(user)
+    isWeb && push('/home')
   }
 
   return (
