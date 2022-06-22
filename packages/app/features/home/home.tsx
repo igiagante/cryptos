@@ -7,10 +7,12 @@ import { coinGeckoApi } from 'app/api'
 import { useRefreshOnFocus } from 'app/hooks'
 import { useQuery } from 'react-query'
 import {useWindowDimensions } from 'react-native'
+import { useRouter } from 'solito/router'
 
 export function HomeScreen() {
   const { signOut } = useContext(AuthContext)
   const { setCoins, isWeb } = useCryptoSpace()
+  const { push } = useRouter()
 
   const { width } = useWindowDimensions();
   const screenWidth = width || 1280;
@@ -30,13 +32,18 @@ export function HomeScreen() {
     }
   }, [data?.data])
 
+  const handleOnClick = () => {
+    signOut()
+    isWeb && push('/')
+  }
+
   return (
     <Box bg={'bgColor'} h="100%" position="relative">
       <Button
         w="64px"
         h="28px"
         p={0}
-        onPress={signOut}
+        onPress={handleOnClick}
         fontWeight="bold"
         position="absolute"
         bg="gold"

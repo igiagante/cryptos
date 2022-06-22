@@ -43,7 +43,7 @@ const DEFI = 'Disrupting the World of Finance Using Blockchain Technology'
 
 
 export const OnboardingScreen = () => {
-  const { push, replace } = useRouter()
+  const { replace } = useRouter()
 
   return (
     <Onboarding
