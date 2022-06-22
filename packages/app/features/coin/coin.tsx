@@ -23,11 +23,12 @@ export function CryptoScreen() {
   const { back } = useRouter()
 
   const { data: coinDetail } = useQuery(['coinDetail', id], () => coinGeckoApi.getCoinDetail(id || ''), {
-    enabled: coins.length === 0 && !!id
+    enabled: coins.length === 0 && !!id,
   })
 
   const { data, isLoading } = useQuery(['coin', id], () => coinGeckoApi.getCoinHistoricData(id || ''), {
-    enabled: !!id
+    enabled: !!id,
+    cacheTime: 1000 * 60 * 60 * 24 // 24hs hours
   })
 
   if (isLoading) {
